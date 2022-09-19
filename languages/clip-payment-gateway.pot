@@ -1,0 +1,129 @@
+# Copyright (C) 2022 AwitaStudio
+# This file is distributed under the GNU General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Clip Checkout Gateway 0.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/clip-payment-gateway\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-09-19T00:12:30+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"X-Domain: clip-payment-gateway\n"
+
+#. Plugin Name of the plugin
+msgid "Clip Checkout Gateway"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://awitastudio.com/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Utilizar Clip Checkout as compuerta de pago."
+msgstr ""
+
+#. Author of the plugin
+msgid "AwitaStudio"
+msgstr ""
+
+#: clip.php:36
+#: clip.php:189
+msgid "Clip Checkout"
+msgstr ""
+
+#: clip.php:123
+msgid "Habilitar / Deshabilitar"
+msgstr ""
+
+#: clip.php:124
+msgid "Habilitar pago con Clip Checkout"
+msgstr ""
+
+#: clip.php:129
+msgid "Nombre de la tienda"
+msgstr ""
+
+#: clip.php:130
+msgid "Se visualizará en el pie de página de los correos"
+msgstr ""
+
+#: clip.php:134
+msgid "Título"
+msgstr ""
+
+#: clip.php:135
+msgid "Mensaje que el usuario visualizará al elegir la compuerta de pago."
+msgstr ""
+
+#: clip.php:136
+msgid "Pagar con Clip"
+msgstr ""
+
+#: clip.php:140
+msgid "Tiempo de espera de la puerta de enlace."
+msgstr ""
+
+#: clip.php:141
+msgid "Segundos que espera el plugin la respuesta de Clip para redirigir el usuario a la orden de compra. En caso de exceder el tiempo de espera el usuario tiene que presionar \"Realizar pedido\" nuevamente."
+msgstr ""
+
+#: clip.php:146
+msgid "Token de Autenticación"
+msgstr ""
+
+
+#: clip.php:147
+msgid "Para generar un token de autenticación en Clip revisa el siguiente enlace:<br><a href=\"https://developer.clip.mx/reference/autenticación-1\" target=\"_blank\">https://developer.clip.mx/reference/autenticación-1</a><br>Pega el token completo después de \"Basic \" (hay un espacio en blanco después de la palabra) sin comillas. Ej:<br> Basic YWJhNWJkNjQtOTYwOC00N2E4LWIwMzUtNWU2NDkzOTBjZTViOmY2NmI0MzVkLTFmYTEtNDk5NC0wMmI2LTBiYTYzMmJhMThiZA=="
+msgstr ""
+
+
+#: clip.php:150
+msgid "Descripción"
+msgstr ""
+
+#: clip.php:152
+msgid "Descripción del método de pago que se visualizará al momento de elegir la compuerta de pago para realizar la transacción. Acepta HTML utilizar con cuidado."
+msgstr ""
+
+#: clip.php:153
+msgid "Al presionar \"Realizar el pedido\" se va a generar un enlace de pago en Clip. Te vamos a redirigir a Clip para que realices el pago. Una vez que realices el pago, vas a regresar a este sitio."
+msgstr ""
+
+#: clip.php:157
+msgid "Instrucciones"
+msgstr ""
+
+#: clip.php:159
+msgid "Mensaje que se anexará a la página final de compras y los correos electrónicos. Acepta HTML utilizar con cuidado."
+msgstr ""
+
+#: clip.php:160
+msgid "Gracias por utilizar Clip Checkout como compuerta de pago."
+msgstr ""
+
+#: clip.php:169
+#: clip.php:175
+msgid "Orden de compra procesada por Clip Checkout"
+msgstr ""
+
+#: clip.php:193
+msgid "Utilizar Clip Checkout como compuerta de pago."
+msgstr ""
+
+#: clip.php:287
+msgid "Hubo un error al generar la orden de pago. Presiona 'Realizar el pedido' nuevamente."
+msgstr ""
+
+#: clip.php:292
+msgid "Error: "
+msgstr ""
+
+#: clip.php:340
+#: clip.php:349
+msgid "No se generó el enlace de compra en Clip Checkout."
+msgstr ""
