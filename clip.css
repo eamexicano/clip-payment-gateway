@@ -1,0 +1,17 @@
+li.payment_method_clip_payment_gateway label {
+  line-height: 60px;
+}
+
+.wc_payment_method > label:first-of-type img {
+  float: right;
+  vertical-align: middle;
+  max-height: 80px !important; 
+}
+
+@media screen and (max-width: 47.99em) { 
+  .wc_payment_method>label:first-of-type img {
+    display: block;
+    margin: 0 auto;
+    float: none !important;
+  } 
+}
