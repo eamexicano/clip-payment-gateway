@@ -17,6 +17,12 @@ function clip_load_textdomain() {
   load_plugin_textdomain( 'clip-payment-gateway', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
 
+add_action( 'init', 'clip_load_stylesheet' );
+function clip_load_stylesheet() {
+  wp_register_style('clip_stylesheet', plugins_url('clip.css',__FILE__ ));
+  wp_enqueue_style('clip_stylesheet');
+}
+
 add_filter( 'woocommerce_payment_gateways', 'clip_add_gateway_class' );
 function clip_add_gateway_class( $gateways ) {
   $methods[] = 'WC_Clip_Gateway';
@@ -32,7 +38,7 @@ function clip_init_gateway_class() {
 
     public function __construct() {
         $this->id              = 'clip_payment_gateway';
-        $this->icon            = WP_PLUGIN_URL . "/" . plugin_basename( dirname(__FILE__)) . '/img/clip.png';
+        $this->icon        = WP_PLUGIN_URL . "/" . plugin_basename( dirname(__FILE__)) . '/img/payment_methods.png';
         $this->method_title    = __( 'Clip Checkout', 'clip-payment-gateway');
         $this->has_fields      = false;
         $this->init_form_fields();
