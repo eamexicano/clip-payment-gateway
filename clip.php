@@ -244,20 +244,11 @@ function clip_init_gateway_class() {
     public function process_payment($order_id) {
       global $woocommerce;
       $this->order        = new WC_Order($order_id);
-
-      $logger = wc_get_logger();
-      $context = array( 'source' => 'clipmx' );
-      $logger->notice("-- process_payment --", $context);
-
       $payment_request_url = $this->clip_create_payment_link();
       sleep($this->gateway_timeout); // Wait for Clip to create the payment link
-            
-      $logger->notice("-- payment_request_url --", $context);
-      $logger->notice(wc_print_r( $payment_request_url, true ), $context);
 
       if ($payment_request_url != false) {
         $woocommerce->cart->empty_cart();
-        $logger->notice("-- process_payment --" . $order_id . " - ", $context);
         // Redirect to Clip Checkout
         return array(
           'result'   => 'success',
@@ -284,7 +275,8 @@ function clip_init_gateway_class() {
     protected function clip_complete_order() {
         global $woocommerce;
 
-        if ($this->order->get_status() == 'completed') return;        
+        if ($this->order->get_status() == 'completed') return;
+        
         $woocommerce->cart->empty_cart();
         $this->order->add_order_note(
             sprintf(
