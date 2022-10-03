@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: Clip Checkout Gateway 0.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/clip-payment-"
 "gateway\n"
-"POT-Creation-Date: 2022-09-19T00:12:30+02:00\n"
-"PO-Revision-Date: 2022-09-19 00:02-0500\n"
+"POT-Creation-Date: 2022-10-02 17:36-0500\n"
+"PO-Revision-Date: 2022-10-02 17:53-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -22,55 +22,38 @@ msgid "Clip Checkout Gateway"
 msgstr "Clip Checkout Gateway"
 
 #. Plugin URI of the plugin
-#. Author URI of the plugin
-msgid "https://awitastudio.com/"
-msgstr "https://awitastudio.com/"
+msgid "https://github.com/eamexicano/clip-payment-gateway"
+msgstr "https://github.com/eamexicano/clip-payment-gateway"
 
 #. Description of the plugin
-msgid "Utilizar Clip Checkout as compuerta de pago."
-msgstr "Use Clip Checkout as a payment gateway."
+msgid "Utilizar Clip Checkout como compuerta de pago."
+msgstr "Use Clip Checkout as payment gateway."
 
 #. Author of the plugin
 msgid "AwitaStudio"
 msgstr "AwitaStudio"
 
-#: clip.php:36 clip.php:189
+#. Author URI of the plugin
+msgid "https://awitastudio.com/"
+msgstr "https://awitastudio.com/"
+
+#: clip.php:60 clip.php:174
 msgid "Clip Checkout"
 msgstr "Clip Checkout"
 
-#: clip.php:123
+#: clip.php:126
 msgid "Habilitar / Deshabilitar"
 msgstr "Enable / Disable"
 
-#: clip.php:124
+#: clip.php:127
 msgid "Habilitar pago con Clip Checkout"
 msgstr "Enable payment with Clip Checkout"
 
-#: clip.php:129
-msgid "Nombre de la tienda"
-msgstr "Store Name"
-
-#: clip.php:130
-msgid "Se visualizará en el pie de página de los correos"
-msgstr "It will be displayed in the footer of the emails"
-
-#: clip.php:134
-msgid "Título"
-msgstr "Title"
-
-#: clip.php:135
-msgid "Mensaje que el usuario visualizará al elegir la compuerta de pago."
-msgstr "Message that the user will see when choosing the payment gateway."
-
-#: clip.php:136
-msgid "Pagar con Clip"
-msgstr "Pay with Clip"
-
-#: clip.php:140
+#: clip.php:132
 msgid "Tiempo de espera de la puerta de enlace."
 msgstr "Gateway timeout."
 
-#: clip.php:141
+#: clip.php:133
 msgid ""
 "Segundos que espera el plugin la respuesta de Clip para redirigir el usuario "
 "a la orden de compra. En caso de exceder el tiempo de espera el usuario "
@@ -80,31 +63,25 @@ msgstr ""
 "the purchase order. In case of exceeding the waiting time, the user has to "
 "press “Place order” again."
 
-#: clip.php:146
+#: clip.php:138
 msgid "Token de Autenticación"
 msgstr "Authentication Token"
 
-#: clip.php:147
+#: clip.php:139
 msgid ""
 "Para generar un token de autenticación en Clip revisa el siguiente enlace:"
 "<br><a href=\"https://developer.clip.mx/reference/autenticación-1\" target="
-"\"_blank\">https://developer.clip.mx/reference/autenticación-1</a><br>Pega "
-"el token completo después de \"Basic \" (hay un espacio en blanco después de "
-"la palabra) sin comillas. Ej:<br> Basic "
-"YWJhNWJkNjQtOTYwOC00N2E4LWIwMzUtNWU2NDkzOTBjZTViOmY2NmI0MzVkLTFmYTEtNDk5NC0wMmI2LTBiYTYzMmJhMThiZA=="
+"\"_blank\">https://developer.clip.mx/reference/autenticación-1</a>"
 msgstr ""
 "To generate an authentication token in Clip check the following link:<br><a "
 "href=\"https://developer.clip.mx/reference/autenticación-1\" target=\"_blank"
-"\">https://developer.clip.mx/reference/autenticación-1</a><br>Paste the "
-"entire token after “Basic “ (there is a blank space after the word) without "
-"quotes. Ex:<br> Basic "
-"YWJhNWJkNjQtOTYwOC00N2E4LWIwMzUtNWU2NDkzOTBjZTViOmY2NmI0MzVkLTFmYTEtNDk5NC0wMmI2LTBiYTYzMmJhMThiZA=="
+"\">https://developer.clip.mx/reference/autenticación-1</a>"
 
-#: clip.php:150
+#: clip.php:142
 msgid "Descripción"
 msgstr "Description"
 
-#: clip.php:152
+#: clip.php:144
 msgid ""
 "Descripción del método de pago que se visualizará al momento de elegir la "
 "compuerta de pago para realizar la transacción. Acepta HTML utilizar con "
@@ -113,21 +90,11 @@ msgstr ""
 "Description of the payment method that will be displayed when choosing the "
 "payment gateway for the transaction. Accept HTML use with care."
 
-#: clip.php:153
-msgid ""
-"Al presionar \"Realizar el pedido\" se va a generar un enlace de pago en "
-"Clip. Te vamos a redirigir a Clip para que realices el pago. Una vez que "
-"realices el pago, vas a regresar a este sitio."
-msgstr ""
-"Pressing “Place the order” will generate a payment link in Clip. We will "
-"redirect you to Clip to make the payment. Once you make the payment, you "
-"will return to this site."
-
-#: clip.php:157
+#: clip.php:148
 msgid "Instrucciones"
 msgstr "Instructions"
 
-#: clip.php:159
+#: clip.php:150
 msgid ""
 "Mensaje que se anexará a la página final de compras y los correos "
 "electrónicos. Acepta HTML utilizar con cuidado."
@@ -135,29 +102,17 @@ msgstr ""
 "Message to be attached to the final shopping page and emails. Accepts HTML "
 "use with care."
 
-#: clip.php:160
-msgid "Gracias por utilizar Clip Checkout como compuerta de pago."
-msgstr "Thank you for using Clip Checkout as your payment gateway."
-
-#: clip.php:169 clip.php:175
-msgid "Orden de compra procesada por Clip Checkout"
-msgstr "Purchase order processed by Clip Checkout"
-
-#: clip.php:193
-msgid "Utilizar Clip Checkout como compuerta de pago."
-msgstr "Use Clip Checkout as a payment gateway."
-
-#: clip.php:287
+#: clip.php:255
 msgid ""
 "Hubo un error al generar la orden de pago. Presiona 'Realizar el pedido' "
 "nuevamente."
 msgstr ""
 "There was an error generating the payment order. Press ‘Place order’ again."
 
-#: clip.php:292
+#: clip.php:260
 msgid "Error: "
 msgstr "Error: "
 
-#: clip.php:340 clip.php:349
+#: clip.php:290 clip.php:299
 msgid "No se generó el enlace de compra en Clip Checkout."
 msgstr "The purchase link was not generated in Clip Checkout."
