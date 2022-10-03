@@ -3,15 +3,14 @@ li.payment_method_clip_payment_gateway label {
 }
 
 .wc_payment_method > label:first-of-type img {
+  display: inline-block;
   float: right;
   vertical-align: middle;
-  max-height: 80px !important; 
+  max-height: 240px !important;
+  max-width: 240px !important;
+  margin: 0 auto 1.5rem auto;
 }
 
-@media screen and (max-width: 47.99em) { 
-  .wc_payment_method>label:first-of-type img {
-    display: block;
-    margin: 0 auto;
-    float: none !important;
-  } 
+div.payment_method_clip_payment_gateway {
+  clear: both;
 }
