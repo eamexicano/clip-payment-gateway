@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: Clip Checkout Gateway
-Plugin URI: https://awitastudio.com/
-Description: Utilizar Clip Checkout as compuerta de pago.
+Plugin URI: https://github.com/eamexicano/clip-payment-gateway
+Description: Utilizar Clip Checkout como compuerta de pago.
 Version: 0.0.1
 Author: AwitaStudio
 Author URI: https://awitastudio.com/
@@ -12,24 +12,41 @@ Text Domain: clip-payment-gateway
 Domain Path: /languages
 */
 
-add_action( 'init', 'clip_load_textdomain' );
+
 function clip_load_textdomain() {
   load_plugin_textdomain( 'clip-payment-gateway', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }
+add_action( 'init', 'clip_load_textdomain' );
 
-add_action( 'init', 'clip_load_stylesheet' );
 function clip_load_stylesheet() {
   wp_register_style('clip_stylesheet', plugins_url('clip.css',__FILE__ ));
   wp_enqueue_style('clip_stylesheet');
 }
+add_action( 'init', 'clip_load_stylesheet' );
 
-add_filter( 'woocommerce_payment_gateways', 'clip_add_gateway_class' );
 function clip_add_gateway_class( $gateways ) {
   $methods[] = 'WC_Clip_Gateway';
   return $methods;
 }
+add_filter( 'woocommerce_payment_gateways', 'clip_add_gateway_class' );
 
-add_action( 'plugins_loaded', 'clip_init_gateway_class' );
+function prepare_token_for_consumption($token) {
+  return str_contains($token, "Basic ") ? $token : "Basic " . $token;
+}
+
+function choose_icon_based_on_current_language() {
+  if (substr( get_locale(), 0, 2 ) === "es") {
+    return WP_PLUGIN_URL . "/" . plugin_basename( dirname(__FILE__)) . '/img/payment_methods_es.png';
+  } else {
+    return WP_PLUGIN_URL . "/" . plugin_basename( dirname(__FILE__)) . '/img/payment_methods_en.png';
+  }
+}
+
+function clip_remove_settings() {
+  $option_name = 'woocommerce_clip_payment_gateway_settings';
+  delete_option($option_name);
+}
+
 function clip_init_gateway_class() {
   class WC_Clip_Gateway extends WC_Payment_Gateway {
     protected $GATEWAY_NAME              = "WC_Clip_Gateway";
@@ -38,40 +55,39 @@ function clip_init_gateway_class() {
 
     public function __construct() {
         $this->id              = 'clip_payment_gateway';
-        $this->icon        = WP_PLUGIN_URL . "/" . plugin_basename( dirname(__FILE__)) . '/img/payment_methods.png';
+        $this->icon        =  choose_icon_based_on_current_language();
+        $icon = choose_icon_based_on_current_language();
         $this->method_title    = __( 'Clip Checkout', 'clip-payment-gateway');
         $this->has_fields      = false;
         $this->init_form_fields();
         $this->init_settings();
-        $this->account_owner = $this->get_option('account_owner');
-        $this->authentication_token = $this->get_option('authentication_token');
-        $this->title           = $this->get_option('title');
+        $this->authentication_token = prepare_token_for_consumption($this->get_option('authentication_token'));
         $this->gateway_timeout = $this->get_option('gateway_timeout');
         $this->description     = $this->get_option('description');
         $this->instructions     = $this->get_option('instructions');
         $this->url = "https://api-gw.payclip.com/checkout/";
 
         add_action(
-            'woocommerce_update_options_payment_gateways_' . $this->id ,
-            array($this, 'process_admin_options')
-        );
-        add_action(
-            'woocommerce_thankyou_' . $this->id,
-            array( $this, 'clip_thankyou_page')
-        );
-        add_action(
-            'woocommerce_email_before_order_table',
-            array($this, 'clip_email_reference')
-        );
-        add_action(
-            'woocommerce_email_before_order_table',
-            array($this, 'clip_email_instructions')
+          'woocommerce_update_options_payment_gateways_clip_payment_gateway',
+          array($this, 'process_admin_options')
         );
 
         add_action(
-            'woocommerce_api_' . strtolower(get_class($this)),
-            array($this, 'clip_webhook_handler')
+          'woocommerce_thankyou_clip_payment_gateway',
+          array( $this, 'clip_thankyou_page')
         );
+
+        add_action(
+          'woocommerce_email_before_order_table',
+          array($this, 'clip_email_instructions')
+        );
+
+        add_action(
+          'woocommerce_api_wc_clip_gateway',
+          array($this, 'clip_webhook_handler')
+        );
+
+        register_uninstall_hook(__FILE__, 'clip_remove_settings');
     }
 
     public function clip_webhook_handler () {
@@ -83,11 +99,11 @@ function clip_init_gateway_class() {
       $order_ipn_nonce = wc_get_order_item_meta($order_id,'ipn_nonce');
 
       if (is_null($order_id)) return;
-      if (is_null($nonce)) return;       
+      if (is_null($nonce)) return;
       if ($order_ipn_nonce !=$nonce) return;
        
       $order = wc_get_order( $order_id );
-      $order->payment_complete();               
+      $order->payment_complete();
       wp_redirect($order->get_checkout_order_received_url());
     } 
 
@@ -99,40 +115,27 @@ function clip_init_gateway_class() {
                 'label'       => __('Habilitar pago con Clip Checkout', 'clip-payment-gateway'),
                 'default'     => 'yes'
             ),
-            'account_owner' => array(
-              'type'        => 'text',
-              'title'       => __('Nombre de la tienda', 'clip-payment-gateway'),
-              'description' => __('Se visualizará en el pie de página de los correos', 'clip-payment-gateway')
-            ),
-            'title' => array(
-                'type'        => 'text',
-                'title'       => __('Título', 'clip-payment-gateway'),
-                'description' => __('Mensaje que el usuario visualizará al elegir la compuerta de pago.', 'clip-payment-gateway'),
-                'default'     => __('Pagar con Clip', 'clip-payment-gateway')
-            ),
             'gateway_timeout' => array(
                 'type'        => 'text',
                 'title'       => __('Tiempo de espera de la puerta de enlace.', 'clip-payment-gateway'),
                 'description' => __('Segundos que espera el plugin la respuesta de Clip para redirigir el usuario a la orden de compra. En caso de exceder el tiempo de espera el usuario tiene que presionar "Realizar pedido" nuevamente.', 'clip-payment-gateway'),
                 'default'     => 5
-            ),            
+            ),
             'authentication_token' => array(
                 'type'        => 'text',
                 'title'       => __('Token de Autenticación', 'clip-payment-gateway'),
-                'description' => __('Para generar un token de autenticación en Clip revisa el siguiente enlace:<br><a href="https://developer.clip.mx/reference/autenticación-1" target="_blank">https://developer.clip.mx/reference/autenticación-1</a><br>Pega el token completo después de \"Basic \" (hay un espacio en blanco después de la palabra) sin comillas. Ej:<br> Basic YWJhNWJkNjQtOTYwOC00N2E4LWIwMzUtNWU2NDkzOTBjZTViOmY2NmI0MzVkLTFmYTEtNDk5NC0wMmI2LTBiYTYzMmJhMThiZA==', 'clip-payment-gateway'),
+                'description' => __("Para generar un token de autenticación en Clip revisa el siguiente enlace:<br><a href=\"https://developer.clip.mx/reference/autenticación-1\" target=\"_blank\">https://developer.clip.mx/reference/autenticación-1</a>", 'clip-payment-gateway'),
             ),
             'description' => array(
                 'title' => __( 'Descripción', 'clip-payment-gateway'),
                 'type' => 'textarea',
                 'description' => __( 'Descripción del método de pago que se visualizará al momento de elegir la compuerta de pago para realizar la transacción. Acepta HTML utilizar con cuidado.', 'clip-payment-gateway'),
-                'default' =>__( 'Al presionar "Realizar el pedido" se va a generar un enlace de pago en Clip. Te vamos a redirigir a Clip para que realices el pago. Una vez que realices el pago, vas a regresar a este sitio.', 'clip-payment-gateway'),
                 'desc_tip' => false,
             ),
             'instructions' => array(
                 'title' => __( 'Instrucciones', 'clip-payment-gateway'),
                 'type' => 'textarea',
                 'description' => __( 'Mensaje que se anexará a la página final de compras y los correos electrónicos. Acepta HTML utilizar con cuidado.', 'clip-payment-gateway'),
-                'default' =>__( 'Gracias por utilizar Clip Checkout como compuerta de pago.', 'clip-payment-gateway'),
                 'desc_tip' => false,
             ),
         );
@@ -140,58 +143,44 @@ function clip_init_gateway_class() {
 
     function clip_thankyou_page ($order_id) {
         $order = new WC_Order( $order_id );
-        echo '<p>'.esc_html($this->account_owner).'</p>';        
-        echo '<p>' . __('Orden de compra procesada por Clip Checkout', 'clip-payment-gateway') . '</p>';
-    }
-
-    function clip_email_reference ($order) {
-      if('customer_processing_order' == $email->id ){       
-         echo '<p>'.esc_html($this->account_owner).'</p>';        
-         echo '<p>' . __('Orden de compra procesada por Clip Checkout', 'clip-payment-gateway') . '</p>';
-       }
+        $instructions = $this->form_fields['instructions'];
+        if ($instructions) {
+          echo $this->instructions;
+        }
     }
 
     public function clip_email_instructions ( $order, $sent_to_admin = false, $plain_text = false ) {
        $instructions = $this->form_fields['instructions'];
-       if ( $instructions && 'on-hold' === $order->get_status() ) {
-           echo wpautop( wptexturize( $this->instructions ) ) . PHP_EOL;
+       $status_that_require_instructions = array('on-hold', 'processing', 'completed');
+       if ($instructions && in_array($order->get_status(), $status_that_require_instructions)) {
+           echo $this->instructions;
        }
     }
 
     public function clip_admin_options() {
       ?>
-        <h3>
-           <?php __('Clip Checkout', 'clip-payment-gateway'); ?>
-        </h3>
-
+        <h3><?php __('Clip Checkout', 'clip-payment-gateway'); ?></h3>
         <p>
           <?php __('Utilizar Clip Checkout como compuerta de pago.', 'clip-payment-gateway'); ?>
         </p>
 
         <table class="form-table">
             <?php $this->generate_settings_html(); ?>
-        </table>        
+        </table>
       <?php
-    }
-
-    public function payment_fields() {
-      ?>
-        <span class='payment-errors required'></span>
-        <?php echo $this->settings['description']; ?>
-      <?php 
     }
 
     protected function clip_create_payment_link() {
         global $woocommerce;
         $authentication_token  = $this->authentication_token;
         $order_id = $this->order->get_id();
-        $currency_code = "MXN"; //=> get_woocommerce_currency();
+        $currency_code = get_woocommerce_currency();
         $nonce = substr(str_shuffle(MD5(microtime())), 0, 12);
         wc_add_order_item_meta($order_id,'ipn_nonce',$nonce);
         $amount           = (float) $this->order->get_total('view');
         $customer_info =  array("customer" =>"" . $this->order->get_billing_first_name() . " " . $this->order->get_billing_last_name() . "");
         $purchase_description = "" . get_bloginfo('url') . " - Pedido con el ID: " . $order_id . "";
-        $callback_url_hook = "" . get_bloginfo('url') . "/wc-api/"  . strtolower(get_class($this)) . "/?nonce=" . $nonce . "&order_id=" . $order_id . "";
+        $callback_url_hook = "" . get_bloginfo('url') . "/wc-api/wc_clip_gateway/?nonce=" . $nonce . "&order_id=" . $order_id . "";
         $callback_url_error = $this->order->get_checkout_payment_url( false );
         $callback_url_default = $this->order->get_checkout_order_received_url();
 
@@ -209,7 +198,7 @@ function clip_init_gateway_class() {
                     'purchase_description' => $purchase_description,
                     'redirection_url' => array(
                         'success' => $callback_url_hook,
-                        'error' => $callback_url_error, //=> A la 5a vez se redirecciona callback_url_error.
+                        'error' => $callback_url_error,
                         'default' => $callback_url_default,
                     ),
                     'metadata' => $customer_info
@@ -245,7 +234,7 @@ function clip_init_gateway_class() {
       global $woocommerce;
       $this->order        = new WC_Order($order_id);
       $payment_request_url = $this->clip_create_payment_link();
-      sleep($this->gateway_timeout); // Wait for Clip to create the payment link
+      sleep($this->gateway_timeout);
 
       if ($payment_request_url != false) {
         $woocommerce->cart->empty_cart();
@@ -263,28 +252,16 @@ function clip_init_gateway_class() {
 
     protected function clip_mark_as_failed_payment() {
       $this->order->update_status('failed', __( 'No se generó el enlace de compra en Clip Checkout.', 'clip-payment-gateway'));
-      $this->order->add_order_note(
-          sprintf(
-              "%s No se generó el enlace de compra en Clip Checkout: '%s'",
-              $this->GATEWAY_NAME,
-              $this->transaction_error_message
-          )
-      );
+      $this->order->add_order_note("No se generó el enlace de compra en Clip Checkout: " . $this->transaction_error_message );
     }
 
     protected function clip_complete_order() {
         global $woocommerce;
 
         if ($this->order->get_status() == 'completed') return;
-        
         $woocommerce->cart->empty_cart();
-        $this->order->add_order_note(
-            sprintf(
-                "%s El pago en clip se completó con un ID: '%s'",
-                $this->GATEWAY_NAME,
-                $this->transaction_id
-            )
-        );
+        $this->order->add_order_note("El pago en clip se completó con un ID: " . $this->transaction_id );
     }
   }
 }
+add_action( 'plugins_loaded', 'clip_init_gateway_class' );
