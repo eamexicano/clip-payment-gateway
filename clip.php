@@ -124,7 +124,7 @@ function clip_init_gateway_class() {
             'authentication_token' => array(
                 'type'        => 'text',
                 'title'       => __('Token de Autenticación', 'clip-payment-gateway'),
-                'description' => __("Para generar un token de autenticación en Clip revisa el siguiente enlace:<br><a href=\"https://developer.clip.mx/reference/autenticación-1\" target=\"_blank\">https://developer.clip.mx/reference/autenticación-1</a>", 'clip-payment-gateway'),
+                'description' => __("Para generar un token de autenticación en Clip revisa el siguiente enlace:<br><a href=\"https://developer.clip.mx/reference/token-de-autenticacion\" target=\"_blank\">https://developer.clip.mx/reference/token-de-autenticacion</a>", 'clip-payment-gateway'),
             ),
             'description' => array(
                 'title' => __( 'Descripción', 'clip-payment-gateway'),

@@ -6,7 +6,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/clip-payment-"
 "gateway\n"
 "POT-Creation-Date: 2022-10-02 17:36-0500\n"
-"PO-Revision-Date: 2022-10-02 17:53-0500\n"
+"PO-Revision-Date: 2022-10-05 01:01-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -27,7 +27,7 @@ msgstr "https://github.com/eamexicano/clip-payment-gateway"
 
 #. Description of the plugin
 msgid "Utilizar Clip Checkout como compuerta de pago."
-msgstr "Use Clip Checkout as payment gateway."
+msgstr "Utilizar Clip Checkout como compuerta de pago."
 
 #. Author of the plugin
 msgid "AwitaStudio"
@@ -59,9 +59,9 @@ msgid ""
 "a la orden de compra. En caso de exceder el tiempo de espera el usuario "
 "tiene que presionar \"Realizar pedido\" nuevamente."
 msgstr ""
-"Seconds that the plugin waits for Clip’s response to redirect the user to "
+"Seconds that the plugin waits for Clip's response to redirect the user to "
 "the purchase order. In case of exceeding the waiting time, the user has to "
-"press “Place order” again."
+"press \"Place order\" again."
 
 #: clip.php:138
 msgid "Token de Autenticación"
@@ -70,12 +70,13 @@ msgstr "Authentication Token"
 #: clip.php:139
 msgid ""
 "Para generar un token de autenticación en Clip revisa el siguiente enlace:"
-"<br><a href=\"https://developer.clip.mx/reference/autenticación-1\" target="
-"\"_blank\">https://developer.clip.mx/reference/autenticación-1</a>"
+"<br><a href=\"https://developer.clip.mx/reference/token-de-autenticacion\" "
+"target=\"_blank\">https://developer.clip.mx/reference/token-de-"
+"autenticacion</a>"
 msgstr ""
 "To generate an authentication token in Clip check the following link:<br><a "
-"href=\"https://developer.clip.mx/reference/autenticación-1\" target=\"_blank"
-"\">https://developer.clip.mx/reference/autenticación-1</a>"
+"href=\"https://developer.clip.mx/reference/token-de-autenticacion\" target="
+"\"_blank\">https://developer.clip.mx/reference/token-de-autenticacion</a>"
 
 #: clip.php:142
 msgid "Descripción"
@@ -88,7 +89,7 @@ msgid ""
 "cuidado."
 msgstr ""
 "Description of the payment method that will be displayed when choosing the "
-"payment gateway for the transaction. Accept HTML use with care."
+"payment gateway for the transaction. Accepts HTML handle with care."
 
 #: clip.php:148
 msgid "Instrucciones"
@@ -100,14 +101,14 @@ msgid ""
 "electrónicos. Acepta HTML utilizar con cuidado."
 msgstr ""
 "Message to be attached to the final shopping page and emails. Accepts HTML "
-"use with care."
+"handle with care."
 
 #: clip.php:255
 msgid ""
 "Hubo un error al generar la orden de pago. Presiona 'Realizar el pedido' "
 "nuevamente."
 msgstr ""
-"There was an error generating the payment order. Press ‘Place order’ again."
+"There was an error generating the payment order. Press 'Place order' again."
 
 #: clip.php:260
 msgid "Error: "

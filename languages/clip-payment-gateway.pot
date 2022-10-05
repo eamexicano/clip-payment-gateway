@@ -60,7 +60,7 @@ msgid "Token de Autenticación"
 msgstr ""
 
 #: clip.php:139
-msgid "Para generar un token de autenticación en Clip revisa el siguiente enlace:<br><a href=\"https://developer.clip.mx/reference/autenticación-1\" target=\"_blank\">https://developer.clip.mx/reference/autenticación-1</a>"
+msgid "Para generar un token de autenticación en Clip revisa el siguiente enlace:<br><a href=\"https://developer.clip.mx/reference/token-de-autenticacion\" target=\"_blank\">https://developer.clip.mx/reference/token-de-autenticacion</a>"
 msgstr ""
 
 #: clip.php:142
