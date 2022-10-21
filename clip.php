@@ -25,8 +25,8 @@ function clip_load_stylesheet() {
 add_action( 'init', 'clip_load_stylesheet' );
 
 function clip_add_gateway_class( $gateways ) {
-  $methods[] = 'WC_Clip_Gateway';
-  return $methods;
+  $gateways[] = 'WC_Clip_Gateway';
+  return $gateways;
 }
 add_filter( 'woocommerce_payment_gateways', 'clip_add_gateway_class' );
 
